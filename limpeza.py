@@ -45,13 +45,13 @@ df['PR_NOME'] = df['PR_NOME'].str.title().str.strip()
 print(df['PR_CAT'].value_counts())
 print(df['PR_NOME'].value_counts())
 
-                # Padronização de valores inválidos
+                # padronização de valores inválidos
 df.replace(['#N/D','NULL', 'N/A', '', ' '], np.nan, inplace=True)
 
                 # convertendo as datas 
 df['DATA'] = pd.to_datetime(df['DATA'],dayfirst=True,errors='coerce')
 
-                # Preenchendo valores nulos, usando (if/else)
+                # preenchendo valores nulos, usando (if/else)
 df['PR_NOME'] = [
     'Sem Nome' if pd.isna(valor) else valor
     for valor in df['PR_NOME']
@@ -68,3 +68,9 @@ relatorio_qualidade(df)
                 # visualização final dos dados 
 print("Dados apos limpeza")
 print(df.head())
+
+                # versão final limpa
+df_limpo = df.copy()
+
+                # salvar dataframe limpo
+df_limpo.to_csv('dados/base_varejo_limpa.csv', sep=';',index=False)
